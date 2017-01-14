@@ -43,6 +43,10 @@ gulp.task("watch:index", function() {
   gulp.watch('*.js', ["compile:index"]);
 });
 
+gulp.task("watch:app", function() {
+  gulp.watch('src/**/*.js', ["compile:app"]);
+});
+
 
 /**
  * Start local server for development
@@ -62,7 +66,7 @@ gulp.task("serve:dev",  function() {
 
 gulp.task("copy:all", ["copy:packagejson", "copy:envFile"]);
 
-gulp.task("watch:all", ["watch:index"]);
+gulp.task("watch:all", ["watch:index", "watch:app"]);
 
 gulp.task("compile:all", ["compile:index", "compile:app"]);
 

@@ -3,8 +3,11 @@
 require('dotenv').load();
 import express from 'express';
 import bodyParser from 'body-parser';
-
+import passport from 'passport';
 let app = express();
+
+require('./src/Config/passport');
+require('./src/Config/database');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,8 +20,10 @@ let allowCrossOrigin = (req, res, next) => {
 app.use(allowCrossOrigin);
 
 app.get('/', (req, res) => {
-  res.json("Welcome to the universe");
+  res.json("Welcome to the only universe");
 });
+
+app.use(passport.initialize());
 
 const port = +process.env.PORT || 6060;
 const server = app.listen(port, "localhost" , () => {
