@@ -24,13 +24,13 @@ gulp.task("copy:envFile", function () {
         .pipe(gulp.dest("./build"));
 });
 
-gulp.task("copy:index", function() {
+/* COMPILE AND COPY APP*/
+gulp.task("compile:index", function() {
   return gulp.src(["*.js"])
     .pipe(gulp_babel({presets: ['es2015']}))
     .pipe(gulp.dest("./build"));
 });
 
-/* COMPILE AND COPY APP*/
 gulp.task("compile:app", function() {
   return gulp.src(["src/**/*.js"])
     .pipe(gulp_babel({presets: ['es2015']}))
@@ -60,10 +60,12 @@ gulp.task("serve:dev",  function() {
 });
 
 
-gulp.task("copy:all", ["copy:packagejson", "copy:envFile", "copy:index"]);
+gulp.task("copy:all", ["copy:packagejson", "copy:envFile"]);
 
 gulp.task("watch:all", ["watch:index"]);
 
-gulp.task("development", ["watch:all", "copy:all" , "compile:app", "serve:dev"]);
+gulp.task("compile:all", ["compile:index", "compile:app"]);
+
+gulp.task("development", ["watch:all", "copy:all" , "compile:all", "serve:dev"]);
 
 gulp.task("default", ["development"]);

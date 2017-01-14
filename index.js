@@ -8,7 +8,7 @@ let app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-let allowCrossOrigin = function (req, res, next) {
+let allowCrossOrigin = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,PATCH,DELETE,OPTIONS,HEAD");
     res.header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
@@ -16,7 +16,7 @@ let allowCrossOrigin = function (req, res, next) {
 };
 app.use(allowCrossOrigin);
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.json("Welcome to the universe");
 });
 
