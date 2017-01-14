@@ -40,7 +40,7 @@ gulp.task("compile:app", function() {
 
 /** WATCH **/
 gulp.task("watch:index", function() {
-  gulp.watch('*.js', ["copy:index"]);
+  gulp.watch('*.js', ["compile:index"]);
 });
 
 
