@@ -1,4 +1,5 @@
 /*eslint-disable no-console*/
+/*eslint-disable no-var*/
 
 "use strict";
 
@@ -50,7 +51,7 @@ gulp.task("watch:app", function() {
 
 /**
  * Start local server for development
- */
+
 gulp.task("serve:dev",  function() {
     gulp_livereload.listen();
     gulp_nodemon({
@@ -61,8 +62,22 @@ gulp.task("serve:dev",  function() {
         console.log("Nodemon Restarted");
         gulp_livereload.changed();
     });
-});
+}); */
 
+gulp.task("serve:dev", function() {
+  var stream = gulp_nodemon({ script: "build/index.js"
+          , ext: 'js'
+          , ignore: [] });
+
+  stream
+    .on('restart', function() {
+      console.log('restarted!');
+    })
+    .on('crash', function() {
+      console.error('Application has crashed!\n');
+       stream.emit('restart', 10);  // restart the server in 10 seconds
+    });
+});
 
 gulp.task("copy:all", ["copy:packagejson", "copy:envFile"]);
 
@@ -70,6 +85,8 @@ gulp.task("watch:all", ["watch:index", "watch:app"]);
 
 gulp.task("compile:all", ["compile:index", "compile:app"]);
 
-gulp.task("development", ["watch:all", "copy:all" , "compile:all", "serve:dev"]);
+gulp.task("development", ["copy:all" , "compile:all", "watch:all", "serve:dev"]);
+
+gulp.task("hack", ["copy:all" , "compile:all", "watch:all"]);
 
 gulp.task("default", ["development"]);

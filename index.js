@@ -4,6 +4,7 @@ require('dotenv').load();
 import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
+
 let app = express();
 
 require('./src/Config/passport');
@@ -24,6 +25,19 @@ app.get('/', (req, res) => {
 });
 
 app.use(passport.initialize());
+
+let UserRoute = require('./src/Features/Users/userRoutes');
+
+app.use("/api/v1", UserRoute);
+
+// Error Middleware
+app.use( (err, req, res, next) => {
+  if(err.errno === 'EADDRINUSE')
+       console.log("Port Busy");
+  else
+       console.log(err);
+  next();
+})
 
 const port = +process.env.PORT || 6060;
 const server = app.listen(port, "localhost" , () => {
