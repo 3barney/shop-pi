@@ -48,22 +48,6 @@ gulp.task("watch:app", function() {
   gulp.watch('src/**/*.js', ["compile:app"]);
 });
 
-
-/**
- * Start local server for development
-
-gulp.task("serve:dev",  function() {
-    gulp_livereload.listen();
-    gulp_nodemon({
-        script: "build/index.js",
-        ext: "js",
-        ignore: []
-    }).on("restart", function() {
-        console.log("Nodemon Restarted");
-        gulp_livereload.changed();
-    });
-}); */
-
 gulp.task("serve:dev", function() {
   var stream = gulp_nodemon({ script: "build/index.js"
           , ext: 'js'

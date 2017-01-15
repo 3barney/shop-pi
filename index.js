@@ -5,6 +5,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 
+const logger = require('./src/Config/logger');
+
 let app = express();
 
 require('./src/Config/passport');
@@ -28,14 +30,17 @@ app.use(passport.initialize());
 
 let UserRoute = require('./src/Features/Users/userRoutes');
 
+logger.debug("Overriding 'Express' logger");
+app.use(require("morgan")("combined", { stream: logger.stream }));
+
 app.use("/api/v1", UserRoute);
 
 // Error Middleware
 app.use( (err, req, res, next) => {
   if(err.errno === 'EADDRINUSE')
-       console.log("Port Busy");
+       logger.debug("Port Busy");
   else
-       console.log(err);
+       logger.debug(err);
   next();
 })
 
