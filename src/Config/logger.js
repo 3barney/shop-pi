@@ -1,6 +1,6 @@
 let fs = require('fs');
 let winston = require('winston');
-import path from 'path';
+const path = require('path');
 winston.emitErrs = true;
 
 const timestampFormat = () => (new Date()).toLocaleTimeString();

@@ -1,5 +1,5 @@
 
-import express from 'express';
+const express = require('express');
 let UserController = require("./UserController");
 let UserRoute = express.Router();
 

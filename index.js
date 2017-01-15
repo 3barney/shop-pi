@@ -1,9 +1,9 @@
 /*eslint-disable no-console*/
-
+"use strict"
 require('dotenv').load();
-import express from 'express';
-import bodyParser from 'body-parser';
-import passport from 'passport';
+const express = require('express');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const logger = require('./src/Config/logger');
 
@@ -42,7 +42,7 @@ app.use( (err, req, res, next) => {
   else
        logger.debug(err);
   next();
-})
+});
 
 const port = +process.env.PORT || 6060;
 const server = app.listen(port, "localhost" , () => {

@@ -25,19 +25,21 @@ gulp.task("copy:envFile", function () {
         .pipe(gulp.dest("./build"));
 });
 
-/* COMPILE AND COPY APP*/
+/* COMPILE AND COPY APP
+.pipe(gulp_babel({presets: ['es2015']}))
+*/
 gulp.task("compile:index", function() {
   return gulp.src(["*.js"])
-    .pipe(gulp_babel({presets: ['es2015']}))
     .pipe(gulp.dest("./build"));
 });
 
 gulp.task("compile:app", function() {
   return gulp.src(["src/**/*.js"])
-    .pipe(gulp_babel({presets: ['es2015']}))
     .pipe(gulp.dest("./build/src"));
 });
-
+/*ignore: [
+  "/src/features/Users/UserModel.js"
+]*/
 
 /** WATCH **/
 gulp.task("watch:index", function() {
