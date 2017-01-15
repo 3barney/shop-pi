@@ -1,3 +1,7 @@
+/**
+* Defines the User Schema and Related methods to be done on Schema
+*/
+
 import mongoose from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
 let crypto = require("crypto");
@@ -44,4 +48,4 @@ UserSchema.pre('save', (next) => {
   next();
 });
 
-export default mongoose.model('users', UserSchema);
+module.exports = mongoose.model('users', UserSchema);
