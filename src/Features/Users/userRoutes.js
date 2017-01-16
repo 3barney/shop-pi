@@ -3,8 +3,8 @@ const express = require('express');
 let UserController = require("./UserController");
 let UserRoute = express.Router();
 
-let UserHandler = new UserController();
-UserRoute.get('/user', UserHandler.getUser);
-UserRoute.post('/user/register', UserHandler.registerUser);
+UserRoute.get('/user', UserController.getUser);
+UserRoute.post('/user/register', UserController.registerUser);
+UserRoute.post('/user/login', UserController.loginUser);
 
 module.exports = UserRoute;

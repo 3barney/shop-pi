@@ -5,12 +5,12 @@
 const mongoose = require('mongoose')
 const jsonwebtoken = require('jsonwebtoken');
 const crypto = require("crypto");
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
   email: { type: String, trim: true, required: "Email cannot be empty", unique: true},
-  first_name: { type: String},
-  second_username: { type: String, unique: true, required: "Username cannot be empty"},
+  first_name: { type: String, required: "Name cannot be empty"},
+  second_name: { type: String},
   phone: {type: String, unique: true},
   hash: { type: String },
   salt: { type: String },
@@ -19,15 +19,15 @@ let UserSchema = new Schema({
   modified_at: { type: Date, required: false},
 }, {timestamps: true});
 
-UserSchema.methods.setPassword = (password) => {
+UserSchema.methods.setPassword = function (password) {
     this.salt = crypto.randomBytes(16).toString("hex");
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString("hex");
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString("hex");
 };
 
-UserSchema.methods.validPassword = (password) => {
+UserSchema.methods.validPassword = function (password) {
   let self = this;
-    let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString("hex");
-    return this.hash === hash;
+  let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString("hex");
+  return this.hash === hash;
 };
 
 UserSchema.methods.generateJWT = () => {
@@ -50,4 +50,4 @@ UserSchema.pre('save', (next) => {
   next();
 });
 
-module.exports = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('user', UserSchema);
