@@ -8,13 +8,11 @@ function sendJsonResponse(res, status, content) {
 }
 
 exports.getUser = (req, res) => {
-  console.log(req.body)
   res.json("Contact me at brnbsjm@gmail.com");
 };
 
 exports.registerUser = (req, res) => {
-  console.log(req.body)
-  let errors = {};
+  let error = [];
   let first_name = req.body.firstName;
   let second_name = req.body.secondName;
   let phone = req.body.phoneNumber;
@@ -22,15 +20,20 @@ exports.registerUser = (req, res) => {
   let password = req.body.password;
 
   if(_.isNil(first_name) || _.isNil(second_name) || _.isNil(email) || _.isNil(password)) {
-    errors.empty = `The fields cannot be empty`;
-    sendJsonResponse(res, 404, errors);
-    return;
+    error.push(`The fields cannot be empty`);
   }
 
   if(!regex.test(email)){
-    errors.email = `Not a valid email address`;
-    sendJsonResponse(res, 404, errors);
-    return;
+    error.push(`Not a valid email address`);
+  }
+
+  if(password.length < 5) {
+    error.push(`Password to short`);
+  }
+
+  if(error.length > 0) {
+    sendJsonResponse(res, 404, error);
+    return
   }
 
   let user = {first_name, second_name, phone, email, password};
