@@ -8,10 +8,12 @@ function sendJsonResponse(res, status, content) {
 }
 
 exports.getUser = (req, res) => {
-  res.json("user jomo");
+  console.log(req.body)
+  res.json("Contact me at brnbsjm@gmail.com");
 };
 
 exports.registerUser = (req, res) => {
+  console.log(req.body)
   let errors = {};
   let first_name = req.body.firstName;
   let second_name = req.body.secondName;
@@ -37,7 +39,16 @@ exports.registerUser = (req, res) => {
       sendJsonResponse(res, 404, response.errors);
       return;
     }
-    sendJsonResponse(res, 200, response.user);
+
+    let savedUserInfo = {
+      "token": response.user.token,
+      "_id": response.user.userData._id,
+      "email": response.user.userData.email,
+      "first_name": response.user.userData.first_name,
+      "second_name": response.user.userData.second_name,
+      "phone_number": response.user.userData.phone
+    };
+    sendJsonResponse(res, 200, savedUserInfo);
   });
 };
 
@@ -70,12 +81,4 @@ exports.loginUser = (req, res) => {
     sendJsonResponse(res, 404, loggedInUser.errors);
   });
 
-}
-/*
-if (_.isNil(response.user)) {
-  sendJsonResponse(res, 404, response.errors);
-  return;
-}
-sendJsonResponse(res, 200, response.user);
-});
-*/
+};

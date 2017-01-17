@@ -32,12 +32,12 @@ UserSchema.methods.validPassword = function (password) {
 
 UserSchema.methods.generateJWT = () => {
   let self = this;
-    let expiry = new Date();
-    expiry.setDate(expiry.getDate() + 7);
-    return jsonwebtoken.sign({
-        _id: this.id,
-        exp: parseInt(expiry.getTime() / 1000)
-    }, process.env.JSONWEBTOKEN_SECRET);
+  let expiry = new Date();
+  expiry.setDate(expiry.getDate() + 7);
+  return jsonwebtoken.sign({
+      _id: this.id,
+      exp: parseInt(expiry.getTime() / 1000)
+  }, process.env.JSONWEBTOKEN_SECRET);
 };
 
 // on every save, add the date
