@@ -33,7 +33,7 @@ exports.registerUser = (req, res) => {
 
   if(error.length > 0) {
     sendJsonResponse(res, 404, error);
-    return
+    return;
   }
 
   let user = {first_name, second_name, phone, email, password};
@@ -56,28 +56,29 @@ exports.registerUser = (req, res) => {
 };
 
 exports.loginUser = (req, res) => {
-  let errors = {};
+  let error = [];
   let email = req.body.email;
   let password = req.body.password;
 
   if(_.isNil(email) || _.isNil(password)) {
-    errors.empty = `The fields cannot be empty`;
-    sendJsonResponse(res, 404, errors);
-    return;
+    error.push(`The fields cannot be empty`);
   }
 
   if(!regex.test(email)){
-    errors.email = `Not a valid email address`;
-    sendJsonResponse(res, 404, errors);
+    error.push(`Not a valid email address`);
+  }
+
+  if(error.length > 0) {
+    sendJsonResponse(res, 404, error);
     return;
   }
 
   let user = {email, password};
   UserService.login(req, res, user, (loggedInUser) => {
-    if (_.isEmpty(loggedInUser.errors) && _.isEmpty(loggedInUser.info)) {
-      sendJsonResponse(res, 404, loggedInUser.user);
+    if (_.isNil(loggedInUser.errors) && _.isNil(loggedInUser.info)) {
+      sendJsonResponse(res, 200, loggedInUser.user);
       return;
-    } else if(_.isEmpty(loggedInUser.errors)) {
+    } else if(_.isNil(loggedInUser.errors)) {
       sendJsonResponse(res, 404, loggedInUser.info);
       return;
     }
