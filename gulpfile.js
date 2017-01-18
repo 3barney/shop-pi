@@ -61,7 +61,7 @@ gulp.task("serve:dev", function() {
     })
     .on('crash', function() {
       console.error('Application has crashed!\n');
-       stream.emit('restart', 10);  // restart the server in 10 seconds
+      stream.emit('restart', 10);  // restart the server in 10 seconds
     });
 });
 

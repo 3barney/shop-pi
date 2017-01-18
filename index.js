@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const logger = require('./src/Config/logger');
+// const logger = require('./src/Config/logger');
 
 let app = express();
 
@@ -31,12 +31,9 @@ app.get('/', (req, res) => {
 app.use(passport.initialize());
 
 let UserRoute = require('./src/Features/Users/userRoutes');
-
+let CategoryRoute = require('./src/Features/Category/CategoryRoute');
+/**
 logger.debug("Overriding 'Express' logger");
-app.use(require("morgan")("combined", { stream: logger.stream }));
-
-app.use("/api/v1", UserRoute);
-
 // Error Middleware
 app.use( (err, req, res, next) => {
   if(err.errno === 'EADDRINUSE')
@@ -45,6 +42,12 @@ app.use( (err, req, res, next) => {
        logger.debug(err);
   next();
 });
+app.use(require("morgan")("combined", { stream: logger.stream })); **/
+
+app.use("/api/v1", UserRoute);
+app.use("/api/v1", CategoryRoute);
+
+
 
 const port = +process.env.PORT || 6060;
 const server = app.listen(port, "localhost" , () => {
