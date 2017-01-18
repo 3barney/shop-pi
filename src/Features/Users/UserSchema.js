@@ -25,20 +25,18 @@ UserSchema.methods.setPassword = function (password) {
 };
 
 UserSchema.methods.validPassword = function (password) {
-  let self = this;
   let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString("hex");
   return this.hash === hash;
 };
 
 UserSchema.methods.generateJWT = function() {
-  let self = this;
   let expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
   return jsonwebtoken.sign({
       _id: this.id,
       exp: parseInt(expiry.getTime() / 1000)
   }, process.env.JSONWEBTOKEN_SECRET);
-}.bind(this);
+};
 
 // on every save, add the date
 UserSchema.pre('save', (next) => {
