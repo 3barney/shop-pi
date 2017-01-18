@@ -3,19 +3,11 @@ let AuthMiddleware  = require('../../Config/AuthMiddleware');
 let CategoryController = require('./CategoryController');
 let CategoryRoute = express.Router();
 
-CategoryRoute.get('/category', AuthMiddleware.userAuthMiddleware ,CategoryController.testDummyGet)
+CategoryRoute.get(
+  '/category', AuthMiddleware.userAuthMiddleware, CategoryController.fetchAllCategories
+);
+CategoryRoute.post(
+  '/category', AuthMiddleware.userAuthMiddleware, CategoryController.createCategory
+);
 
 module.exports = CategoryRoute;
-
-/*
-const express = require('express');
-let UserController = require("./UserController");
-let UserRoute = express.Router();
-
-UserRoute.get('/user', UserController.getUser);
-UserRoute.post('/user/register', UserController.registerUser);
-UserRoute.get('/user/register', UserController.getUser);
-UserRoute.post('/user/login', UserController.loginUser);
-
-module.exports = UserRoute;
-*/
