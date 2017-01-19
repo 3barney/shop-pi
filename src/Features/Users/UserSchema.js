@@ -2,7 +2,7 @@
 * Defines the User Schema and Related methods to be done on Schema
 */
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
 const crypto = require("crypto");
 const Schema = mongoose.Schema;

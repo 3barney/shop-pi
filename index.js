@@ -1,5 +1,5 @@
 /*eslint-disable no-console*/
-"use strict"
+"use strict";
 require('dotenv').load();
 const express = require('express');
 const bodyParser = require('body-parser');
