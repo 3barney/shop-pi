@@ -9,5 +9,8 @@ CategoryRoute.get(
 CategoryRoute.post(
   '/category', AuthMiddleware.userAuthMiddleware, CategoryController.createCategory
 );
+CategoryRoute.put(
+  '/category/:id', AuthMiddleware.userAuthMiddleware, CategoryController.updateCategory
+);
 
 module.exports = CategoryRoute;

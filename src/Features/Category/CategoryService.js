@@ -41,3 +41,21 @@ exports.fetchAllCategories = (callback) => {
       return callback({"error": error});
     });
 };
+
+exports.updateSingleCategory = (categoryId, cat, callback) => {
+  let {newCategoryName, newCategorySlug, user_id} = cat;
+  let updatedCatPromise = CategorySchema.findById(categoryId).exec();
+  updatedCatPromise
+    .then( (category) => {
+      category.name = newCategoryName;
+      category.slug = newCategorySlug;
+      category.created_by = user_id;
+      return category.save();
+    })
+    .then( (updatedCategry) => {
+      callback({"category": updatedCategry});
+    })
+    .catch( error => {
+      callback({"error": error});
+    });
+};

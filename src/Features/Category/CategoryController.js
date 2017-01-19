@@ -39,6 +39,25 @@ exports.createCategory = (req, res) => {
   });
 };
 
+exports.updateCategory = (req, res) => {
+  UserAuthMiddleware.getLoggedInUser(req, res, (req, res, user_id) => {
+    const categoryId = req.params.id;
+    const newCategoryName = req.body.name;
+    const newCategorySlug = _.kebabCase(newCategoryName);
+    let cat = {newCategoryName, newCategorySlug, user_id};
+    if(_.isEqual(categoryId, req.body._id)){
+      CategoryService.updateSingleCategory(categoryId, cat, (updatedCategory) => {
+        if (!_.isNil(updatedCategory.category)) {
+          sendJsonResponse(res, 200, updatedCategory.category);
+        }
+        sendJsonResponse(res, 404, updatedCategory.error);
+      });
+    } else {
+      sendJsonResponse(res, 404, `Category Not Found`);
+    }
+  });
+};
+
 function sendJsonResponse(res, status, content) {
   res.status(status);
   res.json(content);
