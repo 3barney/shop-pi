@@ -4,8 +4,7 @@ require('dotenv').load();
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-
-// const logger = require('./src/Config/logger');
+const logger = require('./src/Config/logger');
 
 let app = express();
 
@@ -32,17 +31,9 @@ app.use(passport.initialize());
 
 let UserRoute = require('./src/Features/Users/userRoutes');
 let CategoryRoute = require('./src/Features/Category/CategoryRoute');
-/**
+
 logger.debug("Overriding 'Express' logger");
-// Error Middleware
-app.use( (err, req, res, next) => {
-  if(err.errno === 'EADDRINUSE')
-       logger.debug("Port Busy");
-  else
-       logger.debug(err);
-  next();
-});
-app.use(require("morgan")("combined", { stream: logger.stream })); **/
+app.use(require("morgan")("combined", { stream: logger.stream }));
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CategoryRoute);
