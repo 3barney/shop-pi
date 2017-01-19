@@ -22,18 +22,22 @@ exports.createCategory = (req, res) => {
   UserAuthMiddleware.getLoggedInUser(req, res, (req, res, user_id) => {
     let error = [];
     let category_name = req.body.name;
-    let category_slug = req.body.slug;
 
     if(_.isNil(category_name)) {
       error.push(`Name is required`);
     }
 
+    const category_slug = _.kebabCase(category_name);
     let cat = {category_name, category_slug, user_id};
     CategoryService.createCategory(cat, (createdCategory) => {
-      console.log(createdCategory);
+      if (!_.isNil(createdCategory.category)) {
+        sendJsonResponse(res, 200, createdCategory);
+        return;
+      }
+      sendJsonResponse(res, 404, createdCategory.error);
     });
-  })
-}
+  });
+};
 
 function sendJsonResponse(res, status, content) {
   res.status(status);
