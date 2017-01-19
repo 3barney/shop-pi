@@ -7,8 +7,6 @@ let CategorySchema = new Schema({
   slug: { type: String},
   disabled: { type: Boolean, default: false },
   created_by: {type: Schema.Types.ObjectId, ref: 'User'},
-  created_at: { type: Date, required: false, default: new Date()},
-  modified_at: { type: Date, required: false},
 }, {timestamps: true});
 
 module.exports = mongoose.model('Category', CategorySchema);
