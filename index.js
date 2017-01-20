@@ -31,13 +31,14 @@ app.use(passport.initialize());
 
 let UserRoute = require('./src/Features/Users/userRoutes');
 let CategoryRoute = require('./src/Features/Category/CategoryRoute');
+let ProductRoute = require('./src/Features/Product/ProductRoute');
 
 logger.debug("Overriding 'Express' logger");
 app.use(require("morgan")("combined", { stream: logger.stream }));
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CategoryRoute);
-
+app.use("/api/v1", ProductRoute);
 
 
 const port = +process.env.PORT || 6060;
