@@ -12,7 +12,7 @@ let ProductSchema = new Schema({
   imageLink: { type: String},
   quantity: {type: Number},
   category_name: {type: String, field: 'name', ref: 'Category'},
-  created_by: {type: Schema.Types.ObjectId, ref: 'User'}
+  created_by: {type: Schema.Types.ObjectId, ref: 'User'},
   disabled: {type: Boolean, default: false}
 }, {timestamps: true});
 
